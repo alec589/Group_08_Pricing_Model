@@ -26,16 +26,16 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jLabel1" pref="164" max="32767" attributes="0"/>
                   <Component id="customerNameTextField" max="32767" attributes="0"/>
-                  <Component id="jButton4" alignment="0" pref="164" max="32767" attributes="0"/>
-                  <Component id="jButton9" alignment="0" pref="164" max="32767" attributes="0"/>
+                  <Component id="btnServeCustomers" alignment="0" pref="164" max="32767" attributes="0"/>
+                  <Component id="btnManageProfile" alignment="0" pref="164" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton11" min="-2" pref="164" max="-2" attributes="0"/>
-                  <Component id="jButton10" min="-2" pref="164" max="-2" attributes="0"/>
+                  <Component id="btnPerformanceReports" min="-2" pref="164" max="-2" attributes="0"/>
+                  <Component id="btnReviewOrderStatusHistory" min="-2" pref="184" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-              <Component id="jButton8" min="-2" pref="164" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Component id="btnReviewComission" min="-2" pref="164" max="-2" attributes="0"/>
               <EmptySpace pref="399" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -49,14 +49,14 @@
               <Component id="customerNameTextField" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton4" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="jButton10" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="jButton8" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnServeCustomers" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnReviewOrderStatusHistory" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnReviewComission" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton9" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="jButton11" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnManageProfile" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnPerformanceReports" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="221" max="32767" attributes="0"/>
           </Group>
@@ -64,7 +64,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="btnServeCustomers">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
@@ -92,10 +92,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4IdentifyResourceAssetsActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnServeCustomersIdentifyResourceAssetsActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton9">
+    <Component class="javax.swing.JButton" name="btnManageProfile">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
@@ -123,10 +123,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnManageProfileActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton10">
+    <Component class="javax.swing.JButton" name="btnReviewOrderStatusHistory">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
@@ -154,10 +154,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton10ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReviewOrderStatusHistoryActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton8">
+    <Component class="javax.swing.JButton" name="btnReviewComission">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
@@ -185,10 +185,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton8ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReviewComissionActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton11">
+    <Component class="javax.swing.JButton" name="btnPerformanceReports">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
@@ -216,7 +216,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton11ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPerformanceReportsActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="customerNameTextField">

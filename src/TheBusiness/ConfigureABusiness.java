@@ -35,6 +35,7 @@ import TheBusiness.Supplier.SupplierDirectory;
 import TheBusiness.UserAccountManagement.UserAccount;
 import TheBusiness.UserAccountManagement.UserAccountDirectory;
 import com.github.javafaker.Faker;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -166,9 +167,9 @@ class ConfigureABusiness {
             ProductCatalog catalog = supplier.getProductCatalog();
             for (int j = 0; j < 50; j++) {
                 String productName = faker.commerce().productName();
-                int floorPrice = 1000 + random.nextInt(1000); 
-                int ceilingPrice = floorPrice + 1000 + random.nextInt(2000); 
-                int targetPrice = floorPrice + (ceilingPrice - floorPrice) / 2;
+                int floorPrice = 1000 + (int) (Math.random() * 1000); 
+                int ceilingPrice = floorPrice + 1000 + (int) (Math.random() * 2000); 
+                int targetPrice = floorPrice + (int) ((ceilingPrice - floorPrice) / 2);
                 catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
             }
         }
@@ -182,16 +183,18 @@ class ConfigureABusiness {
         SalesPersonDirectory salesPersonDirectory = business.getSalesPersonDirectory();
         SalesPersonProfile salespersonProfile = salesPersonDirectory.newSalesPersonProfile(personDirectory.newPerson(faker.name().fullName()));
         MasterOrderList masterOrderList = business.getMasterOrderList();
+        ArrayList<Supplier> suppliers = supplierDirectory.getSuplierList();
         for (CustomerProfile customer : customerDirectory.getCustomerlist()) {
-            int numOrders = 1 + random.nextInt(3); 
+            int numOrders = 1 + (int) (Math.random() * 3); 
             for (int o = 0; o < numOrders; o++) {
                 Order order = masterOrderList.newOrder(customer, salespersonProfile);
-                int numItems = 1 + random.nextInt(10); 
+                int numItems = 1 + (int) (Math.random() * 10); 
                 for (int k = 0; k < numItems; k++) {
-                    Supplier supplier = supplierDirectory.getSuplierList().get(random.nextInt(50));
-                    Product product = supplier.getProductCatalog().getProductList().get(random.nextInt(50));
-                    int actualPrice = product.getFloorPrice() + random.nextInt(product.getCeilingPrice() - product.getFloorPrice() + 1);
-                    int quantity = 1 + random.nextInt(5); // 1-5 quantity
+                    Supplier randomSupplier = supplierDirectory.getSuplierList().get((int) (Math.random() * suppliers.size()));
+                     ArrayList<Product> prods = randomSupplier.getProductCatalog().getProductList();
+                    Product product = prods.get((int) (Math.random() * prods.size()));
+                    int actualPrice = product.getFloorPrice() + (int)(Math.random() * (product.getCeilingPrice() - product.getFloorPrice() + 1));
+                    int quantity = 1 + (int) (Math.random() * 5); // 1-5 quantity
                     order.newOrderItem(product, actualPrice, quantity);
                 }
             }

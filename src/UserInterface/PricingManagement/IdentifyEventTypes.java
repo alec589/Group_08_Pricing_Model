@@ -4,17 +4,25 @@
  */
 package UserInterface.PricingManagement;
 
+import TheBusiness.Business.Business;
+import javax.swing.JPanel;
+
 /**
  *
  * @author 陈凯璐
  */
 public class IdentifyEventTypes extends javax.swing.JPanel {
+    JPanel CardSequencePanel; 
+    Business business;
+   
 
     /**
      * Creates new form IdentifyEventTypes
      */
-    public IdentifyEventTypes() {
+    public IdentifyEventTypes(Business b, JPanel clp) {
         initComponents();
+        this.business = b;
+        this.CardSequencePanel = clp;
     }
 
     /**
@@ -30,11 +38,11 @@ public class IdentifyEventTypes extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 365, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

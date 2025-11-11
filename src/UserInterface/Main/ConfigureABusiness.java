@@ -144,14 +144,12 @@ class ConfigureABusiness {
             Person person = personDirectory.newPerson(customerName);
             customerDirectory.newCustomerProfile(person);
         }
-        SalesPersonDirectory salesPersonDirectory = business.getSalesPersonDirectory();
-        SalesPersonProfile salespersonProfile = salesPersonDirectory.newSalesPersonProfile(personDirectory.newPerson(faker.name().fullName()));
         MasterOrderList masterOrderList = business.getMasterOrderList();
         ArrayList<Supplier> suppliers = supplierDirectory.getSuplierList();
         for (CustomerProfile customer : customerDirectory.getCustomerlist()) {
             int numOrders = 1 + (int) (Math.random() * 3); 
             for (int o = 0; o < numOrders; o++) {
-                Order order = masterOrderList.newOrder(customer, salespersonProfile);
+                Order order = masterOrderList.newOrder(customer, salespersonprofile);
                 int numItems = 1 + (int) (Math.random() * 10); 
                 for (int k = 0; k < numItems; k++) {
                     Supplier randomSupplier = supplierDirectory.getSuplierList().get((int) (Math.random() * suppliers.size()));

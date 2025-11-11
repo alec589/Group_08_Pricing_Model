@@ -98,4 +98,9 @@ public SalesPersonProfile getSalesperson() {
 public CustomerProfile getCustomer() {
     return customer;
 }
+
+@Override
+public String toString() {
+    return "Order-" + this.hashCode();
+}
 }

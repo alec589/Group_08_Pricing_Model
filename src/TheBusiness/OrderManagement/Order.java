@@ -37,7 +37,8 @@ public class Order {
         customer = cp;
         salesperson = ep;
         customer.addCustomerOrder(this); //we link the order to the customer
-        salesperson.addSalesOrder(this);  
+        salesperson.addSalesOrder(this); 
+        status = "in process";
     }
     public OrderItem newOrderItem(Product p, int actualprice, int q) {
         OrderItem oi = new OrderItem(p, actualprice, q);
@@ -97,5 +98,10 @@ public SalesPersonProfile getSalesperson() {
 
 public CustomerProfile getCustomer() {
     return customer;
+}
+
+@Override
+public String toString() {
+    return "Order-" + this.hashCode();
 }
 }

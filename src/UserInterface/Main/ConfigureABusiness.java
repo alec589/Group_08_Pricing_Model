@@ -23,6 +23,9 @@ import TheBusiness.Supplier.Supplier;
 import TheBusiness.Supplier.SupplierDirectory;
 import TheBusiness.UserAccountManagement.UserAccount;
 import TheBusiness.UserAccountManagement.UserAccountDirectory;
+import com.github.javafaker.Faker;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -34,7 +37,7 @@ class ConfigureABusiness {
         Business business = new Business("Xerox");
         SupplierDirectory suplierdirectory = business.getSupplierDirectory();
 
-        Supplier supplier1 = suplierdirectory.newSupplier("Lenovo");
+      /*  Supplier supplier1 = suplierdirectory.newSupplier("Lenovo");
         ProductCatalog productcatalog = supplier1.getProductCatalog();
         Product products1p1 = productcatalog.newProduct("Scanner 3  1", 2000, 16500, 10000);
         Product products1p2 = productcatalog.newProduct("Scanner 4", 10000, 25000, 16500);
@@ -55,7 +58,7 @@ class ConfigureABusiness {
         Product products2p5 = productcatalog.newProduct("Low toner Scanner  102", 195000, 500100, 365102);
         Product products2p6 = productcatalog.newProduct("Speedy color Scanner 611", 900000, 125000, 1650000);
         Product products2p7 = productcatalog.newProduct("Premier Printer 300", 322000, 470000, 736500);
-        Product products2p8 = productcatalog.newProduct("Color Photocopier 500", 350000, 580000, 780000);
+        Product products2p8 = productcatalog.newProduct("Color Photocopier 500", 350000, 580000, 780000);*/
 
 // Create Persons
         PersonDirectory persondirectory = business.getPersonDirectory();
@@ -100,7 +103,7 @@ class ConfigureABusiness {
 
 // Process Orders on behalf of sales person and customer
         MasterOrderList masterorderlist = business.getMasterOrderList();
-        Order order1 = masterorderlist.newOrder(customerprofile4, salespersonprofile);
+       /* Order order1 = masterorderlist.newOrder(customerprofile4, salespersonprofile);
         OrderItem oi1 = order1.newOrderItem(products1p1, 18000, 1);
         OrderItem oi2 = order1.newOrderItem(products1p2, 19500, 4);
         OrderItem oi3 = order1.newOrderItem(products1p3, 36500, 10);
@@ -118,8 +121,48 @@ class ConfigureABusiness {
         OrderItem oi15 = order1.newOrderItem(products1p5, 2000, 3);
         OrderItem oi16 = order1.newOrderItem(products1p6, 95000, 2);
         OrderItem oi17 = order1.newOrderItem(products1p7, 26500, 3);
-        OrderItem oi18 = order1.newOrderItem(products1p8, 40000, 2);
-
+        OrderItem oi18 = order1.newOrderItem(products1p8, 40000, 2);*/
+        Faker faker = new Faker();
+        Random random = new Random();
+        SupplierDirectory supplierDirectory = business.getSupplierDirectory();
+        for (int i = 0; i < 50; i++) {
+            String supplierName = faker.company().name();
+            Supplier supplier = supplierDirectory.newSupplier(supplierName);
+            ProductCatalog catalog = supplier.getProductCatalog();
+            for (int j = 0; j < 50; j++) {
+                String productName = faker.commerce().productName();
+                int floorPrice = 1000 + (int) (Math.random() * 1000); 
+                int ceilingPrice = floorPrice + 1000 + (int) (Math.random() * 2000); 
+                int targetPrice = floorPrice + (int) ((ceilingPrice - floorPrice) / 2);
+                catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
+            }
+        }
+        CustomerDirectory customerDirectory = business.getCustomerDirectory();
+        PersonDirectory personDirectory = business.getPersonDirectory();
+        for (int i = 0; i < 300; i++) {
+            String customerName = faker.name().fullName();
+            Person person = personDirectory.newPerson(customerName);
+            customerDirectory.newCustomerProfile(person);
+        }
+        SalesPersonDirectory salesPersonDirectory = business.getSalesPersonDirectory();
+        SalesPersonProfile salespersonProfile = salesPersonDirectory.newSalesPersonProfile(personDirectory.newPerson(faker.name().fullName()));
+        MasterOrderList masterOrderList = business.getMasterOrderList();
+        ArrayList<Supplier> suppliers = supplierDirectory.getSuplierList();
+        for (CustomerProfile customer : customerDirectory.getCustomerlist()) {
+            int numOrders = 1 + (int) (Math.random() * 3); 
+            for (int o = 0; o < numOrders; o++) {
+                Order order = masterOrderList.newOrder(customer, salespersonProfile);
+                int numItems = 1 + (int) (Math.random() * 10); 
+                for (int k = 0; k < numItems; k++) {
+                    Supplier randomSupplier = supplierDirectory.getSuplierList().get((int) (Math.random() * suppliers.size()));
+                     ArrayList<Product> prods = randomSupplier.getProductCatalog().getProductList();
+                    Product product = prods.get((int) (Math.random() * prods.size()));
+                    int actualPrice = product.getFloorPrice() + (int)(Math.random() * (product.getCeilingPrice() - product.getFloorPrice() + 1));
+                    int quantity = 1 + (int) (Math.random() * 5); // 1-5 quantity
+                    order.newOrderItem(product, actualPrice, quantity);
+                }
+            }
+        }
         return business;
 
     }

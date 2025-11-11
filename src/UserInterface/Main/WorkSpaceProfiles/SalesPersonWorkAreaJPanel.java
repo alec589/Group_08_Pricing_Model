@@ -203,7 +203,8 @@ public class SalesPersonWorkAreaJPanel extends javax.swing.JPanel {
     private void btnReviewOrderStatusHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewOrderStatusHistoryActionPerformed
         // TODO add your handling code here:
 
-        ManageSalesPersonOrders iet = new ManageSalesPersonOrders(business, CardSequencePanel);
+        ManageSalesPersonOrders iet = new ManageSalesPersonOrders(business, CardSequencePanel, salesperson);
+
 
         CardSequencePanel.add("FindResourceAsset", iet);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);

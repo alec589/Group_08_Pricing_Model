@@ -7,9 +7,11 @@ package UserInterface.Main.WorkSpaceProfiles.OrderManagement;
 
 import UserInterface.ProductManagement.*;
 import TheBusiness.Business.Business;
+import TheBusiness.OrderManagement.Order;
 import TheBusiness.ProductManagement.Product;
 import TheBusiness.ProductManagement.ProductCatalog;
 import TheBusiness.ProductManagement.ProductSummary;
+import TheBusiness.SalesManagement.SalesPersonProfile;
 import TheBusiness.Supplier.Supplier;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -28,14 +30,38 @@ public class ManageSalesPersonOrders extends javax.swing.JPanel {
     Business business;
     Supplier selectedsupplier;
     Product selectedproduct;
-
-    public ManageSalesPersonOrders(Business bz, JPanel jp) {
+    SalesPersonProfile salesperson;
+  
+    public ManageSalesPersonOrders(Business bz, JPanel jp, SalesPersonProfile spp) {
+        initComponents();
         CardSequencePanel = jp;
         this.business = bz;
-        initComponents();
- 
-
+        this.salesperson = spp;
+        populateTable();
     }
+    
+    public void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) SupplierCatalogTable.getModel();
+        model.setRowCount(0); 
+        
+        ArrayList<Order> allOrders = business.getMasterOrderList().getOrders();
+        
+        for (Order order : allOrders) {
+       
+        if (order.getSalesperson() == this.salesperson) {
+
+            Object[] row = new Object[4];
+            row[0] = order; 
+            row[1] = order.getStatus(); 
+            row[2] = order.getOrderTotal();
+            row[3] = order.getCustomer().getCustomerId();
+
+            model.addRow(row);
+        }
+    }
+}
+    
+
 
  
     /**

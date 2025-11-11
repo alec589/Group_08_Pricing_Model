@@ -158,7 +158,7 @@ class ConfigureABusiness {
         Faker faker = new Faker();
         Random random = new Random();
 
-        // 1. Create 50 suppliers, each with 50 products
+
         SupplierDirectory supplierDirectory = business.getSupplierDirectory();
         for (int i = 0; i < 50; i++) {
             String supplierName = faker.company().name();
@@ -166,8 +166,8 @@ class ConfigureABusiness {
             ProductCatalog catalog = supplier.getProductCatalog();
             for (int j = 0; j < 50; j++) {
                 String productName = faker.commerce().productName();
-                int floorPrice = 1000 + random.nextInt(1000); // 1000-1999
-                int ceilingPrice = floorPrice + 1000 + random.nextInt(2000); // floorPrice+1000~2999
+                int floorPrice = 1000 + random.nextInt(1000); 
+                int ceilingPrice = floorPrice + 1000 + random.nextInt(2000); 
                 int targetPrice = floorPrice + (ceilingPrice - floorPrice) / 2;
                 catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
             }
@@ -196,8 +196,6 @@ class ConfigureABusiness {
                 }
             }
         }
-
-        System.out.println("Business initialized: 50 suppliers, 50 products each, 300 customers, orders generated.");
         return business;
 
     }

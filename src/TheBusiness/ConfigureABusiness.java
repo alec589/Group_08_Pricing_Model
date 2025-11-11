@@ -80,9 +80,9 @@ class ConfigureABusiness {
 // Create Admins to manage the business
 //        EmployeeDirectory employeedirectory = business.getEmployeeDirectory();
 //        EmployeeProfile employeeprofile0 = employeedirectory.newEmployeeProfile(xeroxadminperson001);
-        SupplierDirectory suplierdirectory = business.getSupplierDirectory();
+            SupplierDirectory suplierdirectory = business.getSupplierDirectory();
 
-        Supplier supplier1 = suplierdirectory.newSupplier("Lenovo");
+       Supplier supplier1 = suplierdirectory.newSupplier("Lenovo");
         ProductCatalog productcatalog = supplier1.getProductCatalog();
         Product products1p1 = productcatalog.newProduct("Scanner 3  1", 2000, 16500, 10000);
         Product products1p2 = productcatalog.newProduct("Scanner 4", 10000, 25000, 16500);
@@ -158,8 +158,6 @@ class ConfigureABusiness {
         
         Faker faker = new Faker();
         Random random = new Random();
-
-
         SupplierDirectory supplierDirectory = business.getSupplierDirectory();
         for (int i = 0; i < 50; i++) {
             String supplierName = faker.company().name();
@@ -203,7 +201,7 @@ class ConfigureABusiness {
 
     }
 
-    static Business initializeMarkets() {
+   static Business initializeMarkets() {
         Business business = new Business("Xerox");
 
 // Create Persons
@@ -291,7 +289,49 @@ class ConfigureABusiness {
         msol.getRevenueByChannel(tvchannel);
 
         
-        
+                Faker faker = new Faker();
+        Random random = new Random();
+
+
+        SupplierDirectory supplierDirectory = business.getSupplierDirectory();
+        for (int i = 0; i < 50; i++) {
+            String supplierName = faker.company().name();
+            Supplier supplier = supplierDirectory.newSupplier(supplierName);
+            ProductCatalog catalog = supplier.getProductCatalog();
+            for (int j = 0; j < 50; j++) {
+                String productName = faker.commerce().productName();
+                int floorPrice = 1000 + (int) (Math.random() * 1000); 
+                int ceilingPrice = floorPrice + 1000 + (int) (Math.random() * 2000); 
+                int targetPrice = floorPrice + (int) ((ceilingPrice - floorPrice) / 2);
+                catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
+            }
+        }
+        CustomerDirectory customerDirectory = business.getCustomerDirectory();
+        PersonDirectory personDirectory = business.getPersonDirectory();
+        for (int i = 0; i < 300; i++) {
+            String customerName = faker.name().fullName();
+            Person person = personDirectory.newPerson(customerName);
+            customerDirectory.newCustomerProfile(person);
+        }
+        SalesPersonDirectory salesPersonDirectory = business.getSalesPersonDirectory();
+        SalesPersonProfile salespersonProfile = salesPersonDirectory.newSalesPersonProfile(personDirectory.newPerson(faker.name().fullName()));
+        MasterOrderList masterOrderList = business.getMasterOrderList();
+        ArrayList<Supplier> suppliers = supplierDirectory.getSuplierList();
+        for (CustomerProfile customer : customerDirectory.getCustomerlist()) {
+            int numOrders = 1 + (int) (Math.random() * 3); 
+            for (int o = 0; o < numOrders; o++) {
+                Order order = masterOrderList.newOrder(customer, salespersonProfile);
+                int numItems = 1 + (int) (Math.random() * 10); 
+                for (int k = 0; k < numItems; k++) {
+                    Supplier randomSupplier = supplierDirectory.getSuplierList().get((int) (Math.random() * suppliers.size()));
+                     ArrayList<Product> prods = randomSupplier.getProductCatalog().getProductList();
+                    Product product = prods.get((int) (Math.random() * prods.size()));
+                    int actualPrice = product.getFloorPrice() + (int)(Math.random() * (product.getCeilingPrice() - product.getFloorPrice() + 1));
+                    int quantity = 1 + (int) (Math.random() * 5); // 1-5 quantity
+                    order.newOrderItem(product, actualPrice, quantity);
+                }
+            }
+        }
         return business;
 
     }

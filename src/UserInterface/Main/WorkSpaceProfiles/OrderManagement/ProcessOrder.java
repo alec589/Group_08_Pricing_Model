@@ -408,7 +408,8 @@ public class ProcessOrder extends javax.swing.JPanel {
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Next, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,7 +445,8 @@ public class ProcessOrder extends javax.swing.JPanel {
                         .addGap(30, 30, 30)
                         .addComponent(Next)
                         .addGap(17, 17, 17)
-                        .addComponent(Back))))
+                        .addComponent(Back)))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("Business -wide Product Intelligence");

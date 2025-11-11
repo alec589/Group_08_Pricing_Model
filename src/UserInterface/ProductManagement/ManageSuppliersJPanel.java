@@ -32,83 +32,31 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
         CardSequencePanel = jp;
         this.business = bz;
         initComponents();
-        initializeTable();
+        populateCombobox();
 
     }
 
-    public void initializeTable() {
-
-//clear supplier table
-        SuppliersComboBox.removeAllItems();
-
-        int rc = SupplierCatalogTable.getRowCount();
-        int i;
-        for (i = rc - 1; i >= 0; i--) {
-            ((DefaultTableModel) SupplierCatalogTable.getModel()).removeRow(i);
-        }
-//load suppliers to the combobox
-
-        ArrayList<Supplier> supplierlist = business.getSupplierDirectory().getSuplierList();
-
-        if (supplierlist.isEmpty()) {
-            return;
-        }
-        for (Supplier s : supplierlist) {
-            SuppliersComboBox.addItem(s.toString());
-            SuppliersComboBox.setSelectedIndex(0);
-
-            String suppliername = (String) SuppliersComboBox.getSelectedItem();
-
-            selectedsupplier = business.getSupplierDirectory().findSupplier(suppliername);
-
-            ProductCatalog pc = selectedsupplier.getProductCatalog();
-
-            for (Product pt : pc.getProductList()) {
-
-                Object[] row = new Object[5];
-                row[0] = pt;
-                row[1] = pt.getFloorPrice();
-                row[2] = pt.getCeilingPrice();
-                row[3] = pt.getTargetPrice();
-//                row[1] = pt.getPerformanceMeasure();
-//               row[2] = la.getName();
-                ((DefaultTableModel) SupplierCatalogTable.getModel()).addRow(row);
-            }
-
-        }
-    }
-
-    public void refreshTable() {
-
-//clear supplier table
-        int rc = SupplierCatalogTable.getRowCount();
-        int i;
-        for (i = rc - 1; i >= 0; i--) {
-            ((DefaultTableModel) SupplierCatalogTable.getModel()).removeRow(i);
-        }
-
-        String suppliername = (String) SuppliersComboBox.getSelectedItem();
-
-        selectedsupplier = business.getSupplierDirectory().findSupplier(suppliername);
-        if (selectedsupplier == null) {
-            return;
-        }
-        ProductCatalog pc = selectedsupplier.getProductCatalog();
-
-        for (Product pt : pc.getProductList()) {
-
-            Object[] row = new Object[5];
+       private void populateTable1(String suppliername) {
+       DefaultTableModel model = (DefaultTableModel)SupplierCatalogTable.getModel();
+       model.setRowCount(0);
+       selectedsupplier = business.getSupplierDirectory().findSupplier(suppliername);
+       ProductCatalog pc = selectedsupplier.getProductCatalog();
+       for(  Product pt : pc.getProductList()){ 
+           Object[] row = new Object[4];
             row[0] = pt;
             row[1] = pt.getFloorPrice();
             row[2] = pt.getCeilingPrice();
             row[3] = pt.getTargetPrice();
-//                row[1] = pt.getPerformanceMeasure();
-//               row[2] = la.getName();
-            ((DefaultTableModel) SupplierCatalogTable.getModel()).addRow(row);
-        }
-
-    }
-
+          model.addRow(row);
+        }}
+        private void populateCombobox(){
+              SuppliersComboBox.removeAllItems();
+              if(business.getSupplierDirectory().getSuplierList()!=null){
+                  for(Supplier supplier :business.getSupplierDirectory().getSuplierList()){
+                      SuppliersComboBox.addItem(supplier.getName());
+                  }
+              }
+      }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,9 +70,6 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
         Back = new javax.swing.JButton();
         Next = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        SupplierCatalogTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         productNameTextField = new javax.swing.JTextField();
@@ -137,6 +82,8 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
         productPricePerformanceTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        SupplierCatalogTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -161,37 +108,6 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
         });
 
         jLabel1.setText("Suppliers");
-
-        SupplierCatalogTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Name", "Floor", "Ceiling", "Target"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, true, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        SupplierCatalogTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                SupplierCatalogTableMouseEntered(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                SupplierCatalogTableMousePressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(SupplierCatalogTable);
-
-        jScrollPane2.setViewportView(jScrollPane1);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Manage Suppliers");
@@ -226,18 +142,46 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
 
         jLabel8.setText("Product");
 
+        SupplierCatalogTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Name", "Floor", "Ceiling", "Target"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        SupplierCatalogTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                SupplierCatalogTableMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                SupplierCatalogTableMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(SupplierCatalogTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SuppliersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Back)
                         .addGap(402, 402, 402)
@@ -261,8 +205,9 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(productRevenueTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(productPricePerformanceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addComponent(productPricePerformanceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,9 +220,9 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
                 .addComponent(SuppliersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Back)
                     .addComponent(Next))
@@ -299,7 +244,7 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(productRevenueTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(productPricePerformanceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -322,12 +267,25 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
     private void SuppliersComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuppliersComboBoxActionPerformed
         // TODO add your handling code here:
 
-        refreshTable();
+        String suppliername = (String) SuppliersComboBox.getSelectedItem();
+        populateTable1(suppliername);
         //String sname = (String) SuppliersComboBox.getSelectedItem();
         //selectedsupplier = business.getSupplierDirectory().findSupplier(sname);
 
 
     }//GEN-LAST:event_SuppliersComboBoxActionPerformed
+
+    private void productNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productNameTextFieldActionPerformed
+
+    private void productRevenueTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productRevenueTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productRevenueTextFieldActionPerformed
+
+    private void productPricePerformanceTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productPricePerformanceTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productPricePerformanceTextFieldActionPerformed
 
     private void SupplierCatalogTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SupplierCatalogTableMousePressed
         // TODO add your handling code here:
@@ -341,7 +299,7 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
         if (selectedproduct == null) {
             return;
         }
-        
+
         ProductSummary productsummary = new ProductSummary(selectedproduct);
 
         productNameTextField.setText(selectedproduct.toString());
@@ -351,18 +309,6 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
         productFrequencyBelowTargetTextField.setText( String.valueOf(productsummary.getNumberBelowTarget()));
         productPricePerformanceTextField.setText(String.valueOf(productsummary.getProductPricePerformance()));
     }//GEN-LAST:event_SupplierCatalogTableMousePressed
-
-    private void productNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productNameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_productNameTextFieldActionPerformed
-
-    private void productRevenueTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productRevenueTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_productRevenueTextFieldActionPerformed
-
-    private void productPricePerformanceTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productPricePerformanceTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_productPricePerformanceTextFieldActionPerformed
 
     private void SupplierCatalogTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SupplierCatalogTableMouseEntered
         // TODO add your handling code here:
@@ -383,7 +329,6 @@ public class ManageSuppliersJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField productFrequencyAboveTargetTextField;
     private javax.swing.JTextField productFrequencyBelowTargetTextField;
     private javax.swing.JTextField productNameTextField;

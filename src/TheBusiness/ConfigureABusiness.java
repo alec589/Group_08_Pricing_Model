@@ -34,6 +34,8 @@ import TheBusiness.Supplier.Supplier;
 import TheBusiness.Supplier.SupplierDirectory;
 import TheBusiness.UserAccountManagement.UserAccount;
 import TheBusiness.UserAccountManagement.UserAccountDirectory;
+import com.github.javafaker.Faker;
+import java.util.Random;
 
 /**
  *
@@ -59,12 +61,12 @@ class ConfigureABusiness {
         Person person009 = persondirectory.newPerson("State street"); //we use this as customer
 
 // Create Customers
-        CustomerDirectory customedirectory = business.getCustomerDirectory();
-        CustomerProfile customerprofile1 = customedirectory.newCustomerProfile(person005);
-        CustomerProfile customerprofile2 = customedirectory.newCustomerProfile(person006);
-        CustomerProfile customerprofile3 = customedirectory.newCustomerProfile(person007);
-        CustomerProfile customerprofile4 = customedirectory.newCustomerProfile(person008);
-        CustomerProfile customerprofile5 = customedirectory.newCustomerProfile(person009);
+        CustomerDirectory customerdirectory = business.getCustomerDirectory();
+        CustomerProfile customerprofile1 = customerdirectory.newCustomerProfile(person005);
+        CustomerProfile customerprofile2 = customerdirectory.newCustomerProfile(person006);
+        CustomerProfile customerprofile3 = customerdirectory.newCustomerProfile(person007);
+        CustomerProfile customerprofile4 = customerdirectory.newCustomerProfile(person008);
+        CustomerProfile customerprofile5 = customerdirectory.newCustomerProfile(person009);
 
 // Create Sales people
         SalesPersonDirectory salespersondirectory = business.getSalesPersonDirectory();
@@ -152,20 +154,50 @@ class ConfigureABusiness {
         MarketCatalog mc = business.getMarketCatalog();
         ChannelCatalog cc = business.getChannelCatalog();
         MarketChannelComboCatalog mccc = business.getMarketChannelComboCatalog();
+        
+        Faker faker = new Faker();
+        Random random = new Random();
 
-        /* 1) Define the business
-           2) Define markets
-           3) Define valid channels
-           4) Define market/channel combs
-           5) Prepare product catalogs for different suppliers
-           ---
-           6) Define solution offers based on the suppliers' products
-           7) Link solutions offers to market/channel combs
-           8) Create solution orders..
-        
-        
-        */
-        
+        // 1. Create 50 suppliers, each with 50 products
+        SupplierDirectory supplierDirectory = business.getSupplierDirectory();
+        for (int i = 0; i < 50; i++) {
+            String supplierName = faker.company().name();
+            Supplier supplier = supplierDirectory.newSupplier(supplierName);
+            ProductCatalog catalog = supplier.getProductCatalog();
+            for (int j = 0; j < 50; j++) {
+                String productName = faker.commerce().productName();
+                int floorPrice = 1000 + random.nextInt(1000); // 1000-1999
+                int ceilingPrice = floorPrice + 1000 + random.nextInt(2000); // floorPrice+1000~2999
+                int targetPrice = floorPrice + (ceilingPrice - floorPrice) / 2;
+                catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
+            }
+        }
+        CustomerDirectory customerDirectory = business.getCustomerDirectory();
+        PersonDirectory personDirectory = business.getPersonDirectory();
+        for (int i = 0; i < 300; i++) {
+            String customerName = faker.name().fullName();
+            Person person = personDirectory.newPerson(customerName);
+            customerDirectory.newCustomerProfile(person);
+        }
+        SalesPersonDirectory salesPersonDirectory = business.getSalesPersonDirectory();
+        SalesPersonProfile salespersonProfile = salesPersonDirectory.newSalesPersonProfile(personDirectory.newPerson(faker.name().fullName()));
+        MasterOrderList masterOrderList = business.getMasterOrderList();
+        for (CustomerProfile customer : customerDirectory.getCustomerlist()) {
+            int numOrders = 1 + random.nextInt(3); 
+            for (int o = 0; o < numOrders; o++) {
+                Order order = masterOrderList.newOrder(customer, salespersonProfile);
+                int numItems = 1 + random.nextInt(10); 
+                for (int k = 0; k < numItems; k++) {
+                    Supplier supplier = supplierDirectory.getSuplierList().get(random.nextInt(50));
+                    Product product = supplier.getProductCatalog().getProductList().get(random.nextInt(50));
+                    int actualPrice = product.getFloorPrice() + random.nextInt(product.getCeilingPrice() - product.getFloorPrice() + 1);
+                    int quantity = 1 + random.nextInt(5); // 1-5 quantity
+                    order.newOrderItem(product, actualPrice, quantity);
+                }
+            }
+        }
+
+        System.out.println("Business initialized: 50 suppliers, 50 products each, 300 customers, orders generated.");
         return business;
 
     }

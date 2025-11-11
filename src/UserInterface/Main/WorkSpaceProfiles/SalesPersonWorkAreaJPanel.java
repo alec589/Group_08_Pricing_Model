@@ -204,7 +204,8 @@ public class SalesPersonWorkAreaJPanel extends javax.swing.JPanel {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
 
-        ManageSalesPersonOrders iet = new ManageSalesPersonOrders(business, CardSequencePanel);
+        ManageSalesPersonOrders iet = new ManageSalesPersonOrders(business, CardSequencePanel, salesperson);
+
 
         CardSequencePanel.add("FindResourceAsset", iet);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);

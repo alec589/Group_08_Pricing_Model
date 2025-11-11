@@ -87,4 +87,15 @@ public void CancelOrder(){
 public void Submit(){
     status = "Submitted";
 }
+
+public String getStatus() {
+    return status;
+}
+public SalesPersonProfile getSalesperson() {
+    return salesperson;
+}
+
+public CustomerProfile getCustomer() {
+    return customer;
+}
 }

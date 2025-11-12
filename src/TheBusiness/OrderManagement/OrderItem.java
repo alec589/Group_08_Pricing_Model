@@ -78,4 +78,17 @@ public class OrderItem {
         return quantity;
     }
     
+    public void setActualPrice(int actualPrice) {
+	this.actualPrice = actualPrice;
+    }
+	
+    public void setQuantity(int quantity) {
+	this.quantity = quantity;
+    }
+	    
+    @Override
+    public String toString(){
+	 return String.valueOf(selectedproduct);
+    }
+
 }

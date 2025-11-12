@@ -17,7 +17,10 @@ import TheBusiness.ProductManagement.ProductSummary;
 import TheBusiness.SalesManagement.SalesPersonProfile;
 import TheBusiness.Supplier.Supplier;
 import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -49,6 +52,9 @@ public class ProcessOrder extends javax.swing.JPanel {
         MasterOrderList mol = business.getMasterOrderList();
         currentOrder =  mol.newOrder(customer, salesperson); //no order was made yet
         initializeTable();
+        
+        setupEditableColumns();
+        setupTableListener();
 
     }
 
@@ -248,7 +254,7 @@ public class ProcessOrder extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -532,7 +538,7 @@ public class ProcessOrder extends javax.swing.JPanel {
         OrderItem item = currentOrder.newOrderItem(selectedproduct, 1000, 1);
             Object[] row = new Object[5];
 
-            row[0] = String.valueOf(item.getSelectedProduct());
+            row[0] = item;
             row[1] = String.valueOf(item.getActualPrice());
             row[2] = String.valueOf(item.getQuantity());
             row[3] = String.valueOf(item.getOrderItemTotal());
@@ -591,5 +597,56 @@ public class ProcessOrder extends javax.swing.JPanel {
     private javax.swing.JTextField productRevenueTextField;
     private javax.swing.JTextField salesPersonTextField;
     // End of variables declaration//GEN-END:variables
+    
+    private void setupEditableColumns() {
+	JTextField tf1 = new JTextField();
+	JTextField tf2 = new JTextField();
+	OrderItemsTable.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(tf1));
+	OrderItemsTable.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(tf2));
+    }
+	
+    private void setupTableListener() {
+	DefaultTableModel model = (DefaultTableModel) OrderItemsTable.getModel();
+	
+	model.addTableModelListener(e -> {
+	    if (e.getType() != TableModelEvent.UPDATE) return;
+	
+	    int row = e.getFirstRow();
+	    int col = e.getColumn();
+	    if (col != 1 && col != 2) return;
+	
+	    OrderItem item = (OrderItem) model.getValueAt(row, 0); 
+	
+	    Object newValue = model.getValueAt(row, col);
+	    int newVal = (newValue instanceof Number) ? ((Number) newValue).intValue()
+	                                                   : Integer.parseInt(newValue.toString().trim());
+	
+	    if (col == 1) {
+	        item.setActualPrice(newVal);
+	    } else if (col == 2) {
+	        item.setQuantity(newVal);
+	    }
+	    model.setValueAt(item.getOrderItemTotal(), row, 3);
+	
+	    refreshSummary();
+	});
+	
+	// submit edited value
+	OrderItemsTable.putClientProperty("terminateEditOnFocusLost", true);
+	OrderItemsTable.setSurrendersFocusOnKeystroke(true);
+	
+    }
+	
+    private void refreshSummary() {
+	if (selectedproduct == null) return;
+	
+	ProductSummary s = new ProductSummary(selectedproduct);
+	productNameTextField.setText(selectedproduct.toString());
+	productRevenueTextField.setText(String.valueOf(s.getSalesRevenues()));
+	productFrequencyAboveTargetTextField.setText(String.valueOf(s.getNumberAboveTarget()));
+	productFrequencyBelowTargetTextField.setText(String.valueOf(s.getNumberBelowTarget()));
+	productPricePerformanceTextField.setText(String.valueOf(s.getProductPricePerformance()));
+    }
 
+    
 }

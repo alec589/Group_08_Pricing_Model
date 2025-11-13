@@ -125,10 +125,13 @@ class ConfigureABusiness {
         OrderItem oi18 = order1.newOrderItem(products1p8, 40000, 2);*/
         Faker faker = new Faker();
         Random random = new Random();
+        
         SupplierDirectory supplierDirectory = business.getSupplierDirectory();
+        
         for (int i = 0; i < 50; i++) {
             String supplierName = faker.company().name();
             Supplier supplier = supplierDirectory.newSupplier(supplierName);
+            
             ProductCatalog catalog = supplier.getProductCatalog();
             for (int j = 0; j < 50; j++) {
                 String productName = faker.commerce().productName();
@@ -140,6 +143,7 @@ class ConfigureABusiness {
                 ProductSummary ps = new ProductSummary(p);
             }
         }
+        
         CustomerDirectory customerDirectory = business.getCustomerDirectory();
         PersonDirectory personDirectory = business.getPersonDirectory();
         for (int i = 0; i < 30000; i++) {

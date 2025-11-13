@@ -7,6 +7,7 @@ package UserInterface.PricingManagement;
 import TheBusiness.Business.Business;
 import TheBusiness.ProductManagement.Product;
 import TheBusiness.ProductManagement.ProductCatalog;
+import TheBusiness.ProductManagement.ProductSummary;
 import TheBusiness.Supplier.Supplier;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -62,16 +63,16 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         SupplierCatalogTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbBelowTarget = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        cmbAboveTarget = new javax.swing.JComboBox<>();
+        btnRunSimulation = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblRunSimulation = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtHighestImpactProduct = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtTotalRevenueChange = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -129,20 +130,20 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Decrease % for Below Target:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "10%", "20%", "30%", "40%", "50%" }));
+        cmbBelowTarget.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "10%", "20%", "30%", "40%", "50%" }));
 
         jLabel3.setText("Increase % for Above Target");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "10%", "20%", "30%", "40%", "50%" }));
+        cmbAboveTarget.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "10%", "20%", "30%", "40%", "50%" }));
 
-        jButton1.setText("Run Simulation");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRunSimulation.setText("Run Simulation");
+        btnRunSimulation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRunSimulationActionPerformed(evt);
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblRunSimulation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -153,7 +154,7 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
                 "Product", "Old Target", "New Target", "Old Revenue", "New Revenue", "Impact"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(tblRunSimulation);
 
         jLabel4.setText("Highest Impact Product:");
 
@@ -174,10 +175,10 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
                                 .addComponent(jLabel3))
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbBelowTarget, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbAboveTarget, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(185, 185, 185)
-                            .addComponent(jButton1))
+                            .addComponent(btnRunSimulation))
                         .addComponent(SuppliersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel8)
@@ -189,8 +190,8 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                            .addComponent(jTextField2))))
+                            .addComponent(txtHighestImpactProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                            .addComponent(txtTotalRevenueChange))))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -209,24 +210,24 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbBelowTarget, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cmbAboveTarget, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(jButton1)))
+                        .addComponent(btnRunSimulation)))
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtHighestImpactProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTotalRevenueChange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(120, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -247,17 +248,66 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_SupplierCatalogTableMousePressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRunSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunSimulationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String belowT = (String) cmbBelowTarget.getSelectedItem();
+        String aboveT = (String) cmbAboveTarget.getSelectedItem();
+        
+        int decreasePercent = Integer.parseInt(belowT.replace("%", ""));
+        int increasePercent = Integer.parseInt(aboveT.replace("%", ""));
+        
+         if (selectedsupplier == null) return;
+         ProductCatalog pc = selectedsupplier.getProductCatalog();
+         DefaultTableModel model = (DefaultTableModel) tblRunSimulation.getModel();
+         model.setRowCount(0);
+         
+         double totalImpact = 0;
+         Product highestImpactProduct = null;
+         double highestImpact = Double.NEGATIVE_INFINITY;
+         
+         for (Product p : pc.getProductList()) {
+         ProductSummary ps = p.getProductSummary();
+         int oldTarget = p.getTargetPrice();
+         double newTarget = oldTarget;
+         if (ps.getStatus().equals("Below Target")) {
+            newTarget = oldTarget * (1 - decreasePercent / 100.0);
+        } else if (ps.getStatus().equals("Above Target")) {
+            newTarget = oldTarget * (1 + increasePercent / 100.0);
+        }
+         double oldRevenue = ps.getSalesRevenues();
+         double newRevenue = oldRevenue * (newTarget / oldTarget);
+         double impact = newRevenue - oldRevenue;
+         
+         totalImpact += impact;
+        if (impact > highestImpact) {
+            highestImpact = impact;
+            highestImpactProduct = p;
+        }
+        
+        Object[] row = new Object[6];
+        row[0] = p;
+        row[1] = oldTarget;
+        row[2] = (int)newTarget;
+        row[3] = (int)oldRevenue;
+        row[4] = (int)newRevenue;
+        row[5] = (int)impact;
+        model.addRow(row);
+    }
+         if (highestImpactProduct != null) {
+         txtHighestImpactProduct.setText(highestImpactProduct.toString());
+    }
+         txtTotalRevenueChange.setText(String.format("%.2f", totalImpact));
+
+         
+    }//GEN-LAST:event_btnRunSimulationActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable SupplierCatalogTable;
     private javax.swing.JComboBox<String> SuppliersComboBox;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnRunSimulation;
+    private javax.swing.JComboBox<String> cmbAboveTarget;
+    private javax.swing.JComboBox<String> cmbBelowTarget;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -268,9 +318,9 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tblRunSimulation;
+    private javax.swing.JTextField txtHighestImpactProduct;
+    private javax.swing.JTextField txtTotalRevenueChange;
     // End of variables declaration//GEN-END:variables
 private void populateCombobox(){
               SuppliersComboBox.removeAllItems();

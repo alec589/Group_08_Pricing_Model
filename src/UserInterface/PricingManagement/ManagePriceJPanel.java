@@ -162,7 +162,7 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Total Revenue Change:");
 
-        jLabel6.setText("Highest Margin：");
+        jLabel6.setText("Total Margin：");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

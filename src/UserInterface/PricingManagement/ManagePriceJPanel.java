@@ -5,7 +5,11 @@
 package UserInterface.PricingManagement;
 
 import TheBusiness.Business.Business;
+import TheBusiness.ProductManagement.Product;
+import TheBusiness.ProductManagement.ProductCatalog;
+import TheBusiness.Supplier.Supplier;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,6 +18,8 @@ import javax.swing.JPanel;
 public class ManagePriceJPanel extends javax.swing.JPanel {
     JPanel CardSequencePanel; 
     Business business;
+    Supplier selectedsupplier;
+    Product selectedproduct;
    
 
     /**
@@ -23,8 +29,22 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
         initComponents();
         this.business = b;
         this.CardSequencePanel = clp;
+        populateCombobox();
     }
-
+    private void populateTable1(String suppliername) {
+       DefaultTableModel model = (DefaultTableModel)SupplierCatalogTable.getModel();
+       model.setRowCount(0);
+       selectedsupplier = business.getSupplierDirectory().findSupplier(suppliername);
+       ProductCatalog pc = selectedsupplier.getProductCatalog();
+       for(  Product pt : pc.getProductList()){ 
+           Object[] row = new Object[5];
+            row[0] = pt;
+            row[1] = pt.getTargetPrice();
+            row[2] = pt.getProductSummary().getNumberAboveTarget();
+            row[3] = pt.getProductSummary().getNumberBelowTarget();
+            row[4] = pt.getProductSummary().getStatus();
+          model.addRow(row);
+        }}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -109,11 +129,11 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Decrease % for Below Target:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "10%", "20%", "30%", "40%", "50%" }));
 
         jLabel3.setText("Increase % for Above Target");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "10%", "20%", "30%", "40%", "50%" }));
 
         jButton1.setText("Run Simulation");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +233,8 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
 
     private void SuppliersComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuppliersComboBoxActionPerformed
         // TODO add your handling code here:
-
+        String suppliername = (String) SuppliersComboBox.getSelectedItem();
+        populateTable1(suppliername);
 
     }//GEN-LAST:event_SuppliersComboBoxActionPerformed
 
@@ -251,4 +272,12 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+private void populateCombobox(){
+              SuppliersComboBox.removeAllItems();
+              if(business.getSupplierDirectory().getSuplierList()!=null){
+                  for(Supplier supplier :business.getSupplierDirectory().getSuplierList()){
+                      SuppliersComboBox.addItem(supplier.getName());
+                  }
+              }
+}
 }

@@ -17,6 +17,7 @@ import TheBusiness.Personnel.Person;
 import TheBusiness.Personnel.PersonDirectory;
 import TheBusiness.ProductManagement.Product;
 import TheBusiness.ProductManagement.ProductCatalog;
+import TheBusiness.ProductManagement.ProductSummary;
 import TheBusiness.SalesManagement.SalesPersonDirectory;
 import TheBusiness.SalesManagement.SalesPersonProfile;
 import TheBusiness.Supplier.Supplier;
@@ -134,7 +135,9 @@ class ConfigureABusiness {
                 int floorPrice = 1000 + (int) (Math.random() * 1000); 
                 int ceilingPrice = floorPrice + 1000 + (int) (Math.random() * 2000); 
                 int targetPrice = floorPrice + (int) ((ceilingPrice - floorPrice) / 2);
-                catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
+                //catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
+                Product p = catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
+                ProductSummary ps = new ProductSummary(p);
             }
         }
         CustomerDirectory customerDirectory = business.getCustomerDirectory();

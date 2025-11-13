@@ -284,6 +284,7 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
             highestImpactProduct = p;
         }
         
+        
         Object[] row = new Object[6];
         row[0] = p;
         row[1] = oldTarget;

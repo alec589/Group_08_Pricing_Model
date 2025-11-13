@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  *
  * @author 陈凯璐
  */
-public class IdentifyEventTypes extends javax.swing.JPanel {
+public class RunSimulationJPanel extends javax.swing.JPanel {
     JPanel CardSequencePanel; 
     Business business;
    
@@ -19,7 +19,7 @@ public class IdentifyEventTypes extends javax.swing.JPanel {
     /**
      * Creates new form IdentifyEventTypes
      */
-    public IdentifyEventTypes(Business b, JPanel clp) {
+    public RunSimulationJPanel(Business b, JPanel clp) {
         initComponents();
         this.business = b;
         this.CardSequencePanel = clp;

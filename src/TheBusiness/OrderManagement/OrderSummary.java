@@ -26,7 +26,9 @@ public OrderSummary(Order o){
 //numberofOrdeitemsbelowtarget = o.getNumberOfOrderItemsBelowTarget();
 }
 
-public Order getSubjectOrder(){ return subjectorder;}
+public Order getSubjectOrder(){ 
+    return subjectorder;
+}
 
 public int getOrderProfit(){
     return orderpriceperformance;

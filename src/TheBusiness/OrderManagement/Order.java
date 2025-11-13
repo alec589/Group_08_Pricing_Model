@@ -32,6 +32,7 @@ public class Order {
         salesperson = null;
         status = "in process";
     }
+    
     public Order(CustomerProfile cp, SalesPersonProfile ep) {
         orderitems = new ArrayList();
         customer = cp;
@@ -40,11 +41,13 @@ public class Order {
         salesperson.addSalesOrder(this); 
         status = "in process";
     }
+    
     public OrderItem newOrderItem(Product p, int actualprice, int q) {
         OrderItem oi = new OrderItem(p, actualprice, q);
         orderitems.add(oi);
         return oi;
     }
+    
     //order total is the sumer of the order item totals
     public int getOrderTotal() {
         int sum = 0;
@@ -82,26 +85,31 @@ public class Order {
         else {return false;}
         
     }
-public void CancelOrder(){
-    status = "Cancelled";
-}
-public void Submit(){
-    status = "Submitted";
-}
 
-public String getStatus() {
-    return status;
-}
-public SalesPersonProfile getSalesperson() {
-    return salesperson;
-}
+    public void CancelOrder(){
+        status = "Cancelled";
+    }
 
-public CustomerProfile getCustomer() {
-    return customer;
-}
+    public void Submit(){
+        status = "Submitted";
+    }
 
-@Override
-public String toString() {
-    return "Order-" + this.hashCode();
-}
+    public String getStatus() {
+        return status;
+    }
+
+    public SalesPersonProfile getSalesperson() {
+        return salesperson;
+    }
+
+    public CustomerProfile getCustomer() {
+        return customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Order-" + this.hashCode();
+    }
+    
+    
 }

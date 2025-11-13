@@ -94,8 +94,8 @@ public class ReportDisplayPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        CardSequencePanel.remove(this); // 从卡片布局中移除当前面板
-    ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel); // 显示上一个面板
+        CardSequencePanel.remove(this); 
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel); 
 
     }//GEN-LAST:event_btnBackActionPerformed
 

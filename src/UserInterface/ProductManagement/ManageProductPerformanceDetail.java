@@ -36,7 +36,6 @@ public class ManageProductPerformanceDetail extends javax.swing.JPanel {
 
     public void refreshTable() {
 
-       
         ProductSummary productsummary = new ProductSummary(selectedproduct);
 
         productNameTextField.setText(selectedproduct.toString());

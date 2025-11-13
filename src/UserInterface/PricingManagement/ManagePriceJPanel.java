@@ -256,48 +256,54 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
         int decreasePercent = Integer.parseInt(belowT.replace("%", ""));
         int increasePercent = Integer.parseInt(aboveT.replace("%", ""));
         
-         if (selectedsupplier == null) return;
-         ProductCatalog pc = selectedsupplier.getProductCatalog();
-         DefaultTableModel model = (DefaultTableModel) tblRunSimulation.getModel();
-         model.setRowCount(0);
+        if (selectedsupplier == null) return;
+        
+        ProductCatalog pc = selectedsupplier.getProductCatalog();
+        DefaultTableModel model = (DefaultTableModel) tblRunSimulation.getModel();
+        model.setRowCount(0);
          
-         double totalImpact = 0;
-         Product highestImpactProduct = null;
-         double highestImpact = Double.NEGATIVE_INFINITY;
+        double totalImpact = 0;
+        Product highestImpactProduct = null;
+        double highestImpact = Double.NEGATIVE_INFINITY;
          
-         for (Product p : pc.getProductList()) {
-         ProductSummary ps = p.getProductSummary();
-         int oldTarget = p.getTargetPrice();
-         double newTarget = oldTarget;
-         if (ps.getStatus().equals("Below Target")) {
-            newTarget = oldTarget * (1 - decreasePercent / 100.0);
-        } else if (ps.getStatus().equals("Above Target")) {
-            newTarget = oldTarget * (1 + increasePercent / 100.0);
-        }
-         double oldRevenue = ps.getSalesRevenues();
-         double newRevenue = oldRevenue * (newTarget / oldTarget);
-         double impact = newRevenue - oldRevenue;
+        for (Product p : pc.getProductList()) {
+            ProductSummary ps = p.getProductSummary();
+            int oldTarget = p.getTargetPrice();
+            double newTarget = oldTarget;
+            
+            if (ps.getStatus().equals("Below Target")) {
+               newTarget = oldTarget * (1 - decreasePercent / 100.0);
+            } else if (ps.getStatus().equals("Above Target")) {
+               newTarget = oldTarget * (1 + increasePercent / 100.0);
+            }
          
-         totalImpact += impact;
-        if (impact > highestImpact) {
-            highestImpact = impact;
-            highestImpactProduct = p;
-        }
+            double oldRevenue = ps.getSalesRevenues();
+            // percentage change in actual price = the percentage change in target price
+            double newRevenue = oldRevenue * (newTarget / oldTarget);
+            double impact = newRevenue - oldRevenue;
+         
+            totalImpact += impact;
+            if (impact > highestImpact) {
+                highestImpact = impact;
+                highestImpactProduct = p;
+            }
         
         
-        Object[] row = new Object[6];
-        row[0] = p;
-        row[1] = oldTarget;
-        row[2] = (int)newTarget;
-        row[3] = (int)oldRevenue;
-        row[4] = (int)newRevenue;
-        row[5] = (int)impact;
-        model.addRow(row);
-    }
-         if (highestImpactProduct != null) {
-         txtHighestImpactProduct.setText(highestImpactProduct.toString());
-    }
-         txtTotalRevenueChange.setText(String.format("%.2f", totalImpact));
+            Object[] row = new Object[6];
+            row[0] = p;
+            row[1] = oldTarget;
+            row[2] = (int)newTarget;
+            row[3] = (int)oldRevenue;
+            row[4] = (int)newRevenue;
+            row[5] = (int)impact;
+            model.addRow(row);
+        }
+        
+        if (highestImpactProduct != null) {
+            txtHighestImpactProduct.setText(highestImpactProduct.toString());
+        }
+        
+        txtTotalRevenueChange.setText(String.format("%.2f", totalImpact));
 
          
     }//GEN-LAST:event_btnRunSimulationActionPerformed

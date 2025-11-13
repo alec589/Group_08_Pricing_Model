@@ -98,5 +98,8 @@ public class Product {
     public int getCeilingPrice(){
         return ceilingPrice;
     }
+    public ProductSummary getProductSummary() {
+        return new ProductSummary(this);
+    }
 
 }

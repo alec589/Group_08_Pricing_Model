@@ -42,6 +42,10 @@ public class Product {
         targetPrice = tp;
         return this; //returns itself
     }
+
+    public void setTargetPrice(int targetPrice) {
+        this.targetPrice = targetPrice;
+    }
     
     public int getTargetPrice() {return targetPrice;}
     

@@ -47,4 +47,16 @@ public class ProductSummary {
     public boolean isProductAlwaysAboveTarget() {
         return false; // to be implemented
     }
+    
+    public String getStatus() {
+        if (numberofsalesabovetarget > numberofsalesbelowtarget) {
+            return "Above Target";
+        } else if (numberofsalesbelowtarget > numberofsalesabovetarget) {
+            return "Below Target";
+        } else {
+            return "On Target";  
+        }
+    }
+    
+    
 }

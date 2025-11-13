@@ -12,6 +12,7 @@ package UserInterface.Main.WorkSpaceProfiles;
 
 import TheBusiness.Business.Business;
 import UserInterface.ManageTheBusiness.ManageTheBusinessJPanel;
+import UserInterface.PricingManagement.ManagePriceJPanel;
 import UserInterface.ProductManagement.ManageSuppliersJPanel;
 import javax.swing.JPanel;
 
@@ -171,12 +172,11 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
 
     private void btnManagePricesIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagePricesIdentifyEventsActionPerformed
         // TODO add your handling code here:
-        CardSequencePanel.removeAll();
-        //    IdentifyEventTypes iet= new IdentifyEventTypes(businessunit, CardSequencePanel);
+         ManagePriceJPanel mpj = new ManagePriceJPanel(business, CardSequencePanel);
 
-        //    CardSequencePanel.add("IdentifyEventTypes", iet);
+        CardSequencePanel.add("ManagePriceJPanel", mpj);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-        //((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
+        
 }//GEN-LAST:event_btnManagePricesIdentifyEventsActionPerformed
 
     private void btnPerformanceReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerformanceReportsActionPerformed

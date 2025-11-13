@@ -42,6 +42,10 @@ public class Product {
         targetPrice = tp;
         return this; //returns itself
     }
+
+    public void setTargetPrice(int targetPrice) {
+        this.targetPrice = targetPrice;
+    }
     
     public int getTargetPrice() {return targetPrice;}
     
@@ -85,7 +89,13 @@ public class Product {
         }
         return sum;
     }
-    
+    public void updateOrderItemPrices(double ratio) {
+        for (OrderItem oi : orderitems) {
+        int oldPrice = oi.getActualPrice();
+        int newPrice = (int) Math.round(oldPrice * ratio);
+        oi.setActualPrice(newPrice);
+    }
+}
     public int getSalesVolume() {
         int sum = 0;
         for (OrderItem oi : orderitems) {

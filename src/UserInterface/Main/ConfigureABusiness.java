@@ -153,14 +153,18 @@ class ConfigureABusiness {
         }
         MasterOrderList masterOrderList = business.getMasterOrderList();
         ArrayList<Supplier> suppliers = supplierDirectory.getSuplierList();
+        
         for (CustomerProfile customer : customerDirectory.getCustomerlist()) {
             int numOrders = 1 + (int) (Math.random() * 3); 
+            
             for (int o = 0; o < numOrders; o++) {
                 Order order = masterOrderList.newOrder(customer, salespersonprofile);
                 int numItems = 1 + (int) (Math.random() * 10); 
+                
                 for (int k = 0; k < numItems; k++) {
                     Supplier randomSupplier = supplierDirectory.getSuplierList().get((int) (Math.random() * suppliers.size()));
-                     ArrayList<Product> prods = randomSupplier.getProductCatalog().getProductList();
+                    ArrayList<Product> prods = randomSupplier.getProductCatalog().getProductList();
+                    
                     Product product = prods.get((int) (Math.random() * prods.size()));
                     int actualPrice = product.getFloorPrice() + (int)(Math.random() * (product.getCeilingPrice() - product.getFloorPrice() + 1));
                     int quantity = 1 + (int) (Math.random() * 5); // 1-5 quantity

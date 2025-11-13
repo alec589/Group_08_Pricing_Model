@@ -5,11 +5,25 @@
 package UserInterface.PricingManagement;
 
 import TheBusiness.Business.Business;
-import TheBusiness.ProductManagement.Product;
 import TheBusiness.ProductManagement.ProductCatalog;
 import TheBusiness.ProductManagement.ProductSummary;
 import TheBusiness.Supplier.Supplier;
+import java.awt.CardLayout;
+import UserInterface.PricingManagement.ReportDisplayPanel;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import TheBusiness.ProductManagement.Product; 
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -75,6 +89,8 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
         txtTotalRevenueChange = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         aa = new javax.swing.JTextField();
+        btnGenerateReport = new javax.swing.JButton();
+        btnViewReport = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -164,22 +180,24 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
 
         jLabel6.setText("Total Margin：");
 
+        btnGenerateReport.setText("Generate Final Report");
+        btnGenerateReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateReportActionPerformed(evt);
+            }
+        });
+
+        btnViewReport.setText("View Report");
+        btnViewReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewReportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(SuppliersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel8))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,28 +205,47 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbBelowTarget, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbAboveTarget, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(185, 185, 185)
-                .addComponent(btnRunSimulation))
+                    .addComponent(cmbAboveTarget, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbBelowTarget, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnGenerateReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnViewReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRunSimulation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(60, 60, 60))
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(txtHighestImpactProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel5)
-                .addGap(24, 24, 24)
-                .addComponent(txtTotalRevenueChange, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jLabel6)
-                .addGap(10, 10, 10)
-                .addComponent(aa, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(SuppliersComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtHighestImpactProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel5)
+                        .addGap(24, 24, 24)
+                        .addComponent(txtTotalRevenueChange, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jLabel6)
+                        .addGap(10, 10, 10)
+                        .addComponent(aa, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,23 +258,27 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
+                        .addGap(21, 21, 21)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(cmbBelowTarget, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
+                        .addGap(17, 17, 17)
                         .addComponent(cmbAboveTarget, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(btnRunSimulation)))
-                .addGap(26, 26, 26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRunSimulation)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnViewReport)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGenerateReport)))
+                .addGap(38, 38, 38)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
@@ -333,12 +374,135 @@ public class ManagePriceJPanel extends javax.swing.JPanel {
          
     }//GEN-LAST:event_btnRunSimulationActionPerformed
 
+    private void btnGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportActionPerformed
+        // TODO add your handling code here:
+        /*DefaultTableModel simModel = (DefaultTableModel) tblRunSimulation.getModel();
+        int rowCount = simModel.getRowCount();
+
+        // 2. if the table is empty
+        if (rowCount == 0) {
+  
+        JOptionPane.showMessageDialog(this,
+        "No data to export. Please click 'Run Simulation' first.",
+        "Simulation Not Run",
+        JOptionPane.WARNING_MESSAGE);
+        return; 
+        }
+
+        // Excel
+        StringBuilder reportBuilder = new StringBuilder();
+        reportBuilder.append("Product Name,Freq Above Target,Freq Below Target,Old Target Price,New Target Price,Old Revenue,New Revenue,Impact\n");
+ 
+        for (int i = 0; i < rowCount; i++) {
+            
+        Product product = (Product) simModel.getValueAt(i, 0);
+
+        // get
+        int freqAbove = product.getProductSummary().getNumberAboveTarget();
+        int freqBelow = product.getProductSummary().getNumberBelowTarget();
+
+    
+        String oldTarget = simModel.getValueAt(i, 1).toString();
+        String newTarget = simModel.getValueAt(i, 2).toString();
+        String oldRevenue = simModel.getValueAt(i, 3).toString();
+        String newRevenue = simModel.getValueAt(i, 4).toString();
+        String impact = simModel.getValueAt(i, 5).toString();
+
+        // CSV
+        reportBuilder.append("\"").append(product.toString()).append("\",");
+        reportBuilder.append(freqAbove).append(",");
+        reportBuilder.append(freqBelow).append(",");
+        reportBuilder.append(oldTarget).append(",");
+        reportBuilder.append(newTarget).append(",");
+        reportBuilder.append(oldRevenue).append(",");
+        reportBuilder.append(newRevenue).append(",");
+        reportBuilder.append(impact).append("\n"); // "\n" lane feed
+        }
+
+        reportBuilder.append("\n\n--- Report Summary ---\n");
+        reportBuilder.append("Highest Impact Product,").append(txtHighestImpactProduct.getText()).append("\n");
+        reportBuilder.append("Total Revenue Change,").append(txtTotalRevenueChange.getText()).append("\n");
+
+        saveReportToFile(reportBuilder.toString());*/
+        
+        String reportString = generateReportString(); 
+
+        if (reportString != null) {
+        saveReportToFile(reportString);
+    }
+        
+    }//GEN-LAST:event_btnGenerateReportActionPerformed
+
+    private void btnViewReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewReportActionPerformed
+        // TODO add your handling code here:
+        
+    /*DefaultTableModel simModel = (DefaultTableModel) tblRunSimulation.getModel();
+    int rowCount = simModel.getRowCount();
+
+    if (rowCount == 0) {
+        JOptionPane.showMessageDialog(this,
+            "No data to display. Please click 'Run Simulation' first.",
+            "Simulation Not Run",
+            JOptionPane.WARNING_MESSAGE);
+        return; 
+    }
+
+    StringBuilder reportBuilder = new StringBuilder();
+    reportBuilder.append("Product Name,Freq Above Target,Freq Below Target,Old Target Price,New Target Price,Old Revenue,New Revenue,Impact\n");
+
+    for (int i = 0; i < rowCount; i++) {
+        Product product = (Product) simModel.getValueAt(i, 0);
+
+        if (product == null) {
+            continue; 
+        }
+
+        int freqAbove = product.getProductSummary().getNumberAboveTarget();
+        int freqBelow = product.getProductSummary().getNumberBelowTarget();
+        String oldTarget = simModel.getValueAt(i, 1).toString();
+        String newTarget = simModel.getValueAt(i, 2).toString();
+        String oldRevenue = simModel.getValueAt(i, 3).toString();
+        String newRevenue = simModel.getValueAt(i, 4).toString();
+        String impact = simModel.getValueAt(i, 5).toString();
+
+        reportBuilder.append("\"").append(product.toString()).append("\",");
+        reportBuilder.append(freqAbove).append(",");
+        reportBuilder.append(freqBelow).append(",");
+        reportBuilder.append(oldTarget).append(",");
+        reportBuilder.append(newTarget).append(",");
+        reportBuilder.append(oldRevenue).append(",");
+        reportBuilder.append(newRevenue).append(",");
+        reportBuilder.append(impact).append("\n");
+    }
+
+    reportBuilder.append("\n\n--- Report Summary ---\n");
+    reportBuilder.append("Highest Impact Product,").append(txtHighestImpactProduct.getText()).append("\n");
+    reportBuilder.append("Total Revenue Change,").append(txtTotalRevenueChange.getText()).append("\n");
+
+    String reportString = reportBuilder.toString();
+    ReportDisplayPanel reportPanel = new ReportDisplayPanel(CardSequencePanel, reportString);
+    CardSequencePanel.add("ReportDisplayPanel", reportPanel); 
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "ReportDisplayPanel");
+*/
+    
+    String reportString = generateReportString();
+
+    
+    if (reportString != null) {
+        ReportDisplayPanel reportPanel = new ReportDisplayPanel(CardSequencePanel, reportString);
+        CardSequencePanel.add("ReportDisplayPanel", reportPanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "ReportDisplayPanel");
+    }
+    }//GEN-LAST:event_btnViewReportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable SupplierCatalogTable;
     private javax.swing.JComboBox<String> SuppliersComboBox;
     private javax.swing.JTextField aa;
+    private javax.swing.JButton btnGenerateReport;
     private javax.swing.JButton btnRunSimulation;
+    private javax.swing.JButton btnViewReport;
     private javax.swing.JComboBox<String> cmbAboveTarget;
     private javax.swing.JComboBox<String> cmbBelowTarget;
     private javax.swing.JLabel jLabel1;
@@ -364,4 +528,92 @@ private void populateCombobox(){
                   }
               }
 }
+
+private void saveReportToFile(String reportContent) {
+
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Please select a location to save the report");
+
+    fileChooser.setSelectedFile(new File("Product_Performance_Report.csv"));
+    fileChooser.setFileFilter(new FileNameExtensionFilter("CSV (Comma-Separated Values) (*.csv)", "csv"));
+
+    int userSelection = fileChooser.showSaveDialog(this);
+
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+
+        String filePath = fileToSave.getAbsolutePath();  // make sure the name is end with csv
+        if (!filePath.endsWith(".csv")) {
+            fileToSave = new File(filePath + ".csv");
+        }
+        
+        try (FileWriter fw = new FileWriter(fileToSave)) {
+            fw.write(reportContent); 
+
+            JOptionPane.showMessageDialog(this,
+                "Report saved successfully to:\n" + fileToSave.getAbsolutePath(),
+                 "Report Saved",
+                JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+         
+            JOptionPane.showMessageDialog(this,
+                "Error saving report: " + ex.getMessage(),
+                 "Save Error",
+                JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace(); 
+        }
+    }
 }
+
+private String generateReportString() {
+    DefaultTableModel simModel = (DefaultTableModel) tblRunSimulation.getModel();
+    int rowCount = simModel.getRowCount();
+    if (rowCount == 0) {
+        JOptionPane.showMessageDialog(this,
+            "No data to display. Please click 'Run Simulation' first.",
+            "Simulation Not Run",
+            JOptionPane.WARNING_MESSAGE);
+        return null; 
+    }
+
+    StringBuilder reportBuilder = new StringBuilder();
+
+    String formatString = "%-40s %12s %12s %12s %12s %12s %12s %12s\n";
+    
+    reportBuilder.append(String.format(formatString, 
+        "Product Name", "Freq Above", "Freq Below", "Old Target", "New Target", "Old Revenue", "New Revenue", "Impact"));
+    for (int i = 0; i < rowCount; i++) {
+        
+        Product product = (Product) simModel.getValueAt(i, 0);
+
+        if (product == null) {
+            continue; 
+        }
+
+        int freqAbove = product.getProductSummary().getNumberAboveTarget();
+        int freqBelow = product.getProductSummary().getNumberBelowTarget();
+        String oldTarget = simModel.getValueAt(i, 1).toString();
+        String newTarget = simModel.getValueAt(i, 2).toString();
+        String oldRevenue = simModel.getValueAt(i, 3).toString();
+        String newRevenue = simModel.getValueAt(i, 4).toString();
+        String impact = simModel.getValueAt(i, 5).toString(); 
+
+        reportBuilder.append(String.format(formatString,
+            product.toString(),
+            freqAbove,
+            freqBelow,
+            oldTarget,
+            newTarget,
+            oldRevenue,
+            newRevenue,
+            impact
+        ));
+    }
+
+    reportBuilder.append("\n\n--- Report Summary ---\n");
+    reportBuilder.append("Highest Impact Product,").append(txtHighestImpactProduct.getText()).append("\n");
+    reportBuilder.append("Total Revenue Change,").append(txtTotalRevenueChange.getText()).append("\n");
+
+    return reportBuilder.toString();
+    }
+    }

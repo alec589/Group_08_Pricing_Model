@@ -139,7 +139,7 @@ class ConfigureABusiness {
         }
         CustomerDirectory customerDirectory = business.getCustomerDirectory();
         PersonDirectory personDirectory = business.getPersonDirectory();
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 30000; i++) {
             String customerName = faker.name().fullName();
             Person person = personDirectory.newPerson(customerName);
             customerDirectory.newCustomerProfile(person);

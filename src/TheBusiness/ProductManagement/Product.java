@@ -89,7 +89,13 @@ public class Product {
         }
         return sum;
     }
-    
+    public void updateOrderItemPrices(double ratio) {
+        for (OrderItem oi : orderitems) {
+        int oldPrice = oi.getActualPrice();
+        int newPrice = (int) Math.round(oldPrice * ratio);
+        oi.setActualPrice(newPrice);
+    }
+}
     public int getSalesVolume() {
         int sum = 0;
         for (OrderItem oi : orderitems) {

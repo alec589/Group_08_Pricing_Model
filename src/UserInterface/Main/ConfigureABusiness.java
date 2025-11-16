@@ -149,6 +149,7 @@ class ConfigureABusiness {
         }
         MasterOrderList masterOrderList = business.getMasterOrderList();
         ArrayList<Supplier> suppliers = supplierDirectory.getSuplierList();
+        
         for (CustomerProfile customer : customerDirectory.getCustomerlist()) {
             int numOrders = 1 + (int) (Math.random() * 3); 
             for (int o = 0; o < numOrders; o++) {

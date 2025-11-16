@@ -138,7 +138,7 @@ class ConfigureABusiness {
                 int floorPrice = 1000 + (int) (Math.random() * 1000); 
                 int ceilingPrice = floorPrice + 1000 + (int) (Math.random() * 2000); 
                 int targetPrice = floorPrice + (int) ((ceilingPrice - floorPrice) / 2);
-                //catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
+                
                 Product p = catalog.newProduct(productName, floorPrice, ceilingPrice, targetPrice);
                 ProductSummary ps = new ProductSummary(p);
             }
